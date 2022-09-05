@@ -1,8 +1,8 @@
-FROM node:14.18 as base
+FROM node:latest
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+# RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
-WORKDIR /home/node/app
+WORKDIR .
 
 COPY package*.json ./
 
@@ -16,10 +16,10 @@ USER node
 
 EXPOSE 8080
 
-CMD [ "yarn", "dev" ]
+# FROM base as production
 
-FROM base as production
+# ENV NODE_PATH=./build
 
-ENV NODE_PATH=./build
+# RUN yarn build
 
-RUN yarn build
+CMD ["yarn", "dev"]

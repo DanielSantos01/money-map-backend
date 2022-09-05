@@ -9,7 +9,7 @@
   },
   "author": "",
   "scripts": {
-    "dev": "DEV_ENV=true nodemon index.js",
+    "dev": "node index.js",
     "start": "node index.js",
     "types": "tsc",
     "build": "babel src --out-dir lib --copy-files --extensions '.ts,.js'"
