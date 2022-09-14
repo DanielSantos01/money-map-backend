@@ -13,3 +13,9 @@ Money Map nasceu da necessidade de uma forma mais prática e intuitiva de organi
 
 # Status do projeto
 Em desenvolvimento (Finalizadas telas relacionadas ao acesso do usuário ao aplicativo)
+
+# Links úteis
+
+Notion:https://www.notion.so/Money-Map-674894654323432c9cd5c7b63406321c
+
+Figma:https://www.figma.com/file/DdH48RdoD6bucrDNtJE9DZ/Moneymap?node-id=0%3A1
