@@ -12,19 +12,19 @@ export default class User {
     @Column('text')
     name: string | undefined;
 
-    @Column('alphanum')
+    @Column('text')
     password: string | undefined;
 
-    @Column('number', {nullable: true})
+    @Column('numeric', {nullable: true})
     income: number | undefined;
 
-    @Column('number', {nullable: true})
+    @Column('numeric', {nullable: true})
     fixedGoal: number | undefined;
 
-    @Column('number', {nullable: true})
+    @Column('numeric', {nullable: true})
     variableGoal: number | undefined;
 
-    @Column('number', {nullable: true})
+    @Column('numeric', {nullable: true})
     futureGoal: number | undefined;
 
 }

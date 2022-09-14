@@ -48,19 +48,19 @@ export default class UserRepository extends Repository<User> {
         };
     };
 
-    public async checkPasswordIsEqual(id: string, password: string): Promise<Boolean> {
-        try {
-          const { password: hashPassword } = await this.createQueryBuilder()
-            .addSelect('User.password')
-            .where('User.id = :id', { id })
-            .getOne();
+    // public async checkPasswordIsEqual(id: string, password: string): Promise<Boolean> {
+    //     try {
+    //       const { password: hashPassword } = await this.createQueryBuilder()
+    //         .addSelect('User.password')
+    //         .where('User.id = :id', { id })
+    //         .getOne();
     
-          const result = bcryptjs.compare(password, hashPassword);
+    //       const result = bcryptjs.compare(password, hashPassword);
     
-          return result;
-        } catch (error) {
-          return error;
-        }
-    }
+    //       return result;
+    //     } catch (error) {
+    //       return error;
+    //     }
+    // }
 }
 
