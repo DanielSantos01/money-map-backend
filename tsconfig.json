@@ -7,6 +7,27 @@
       "strict": true,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
+      "resolveJsonModule": true,
+      "skipLibCheck": true,
+      "typeRoots": [
+        "./node_modules/@types",
+        "./src/@types"
+      ],
+      "baseUrl": ".",
+      "paths": {
+        "@controllers/*": [
+          "./src/controllers/*"
+        ],
+        "@models/*": [
+          "./src/models/*"
+        ],
+        "@DTOs/*": [
+          "./src/DTOs/*"
+        ],
+        "@repositories/*": [
+          "./src/repositories/*"
+        ],
+      }
     },
     "include": [
       "./src/**/*"
