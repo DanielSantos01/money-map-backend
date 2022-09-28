@@ -49,9 +49,6 @@ describe('category CRUD', () => {
 
     const response = await request(app).get(`/category/${category.id}`).send();
 
-    console.log(response.status);
-    console.log('response', response.body);
-
     expect(response.status).toBe(201);
     expect(response.body.data).toHaveProperty('name', categoryTestGetById.name);
     expect(response.body.data).toHaveProperty('icon', categoryTestGetById.icon);
@@ -74,9 +71,25 @@ describe('category CRUD', () => {
 
     const response = await request(app).get('/category').send();
 
-    console.log(response.body);
-
     expect(response.status).toBe(201);
     expect(response.body.data.length).toBe(1);
+  });
+
+  it('should list delete one categories', async () => {
+    await connection.clear();
+
+    const categoryTestGetById = {
+      name: 'balance',
+      icon: 'balance_icon',
+      description: 'current balance',
+    };
+
+    const { body } = await request(app)
+      .post('/category')
+      .send(categoryTestGetById);
+
+    const response = await request(app).delete(`/category/${body.data.id}`).send();
+
+    expect(response.status).toBe(201);
   });
 });
