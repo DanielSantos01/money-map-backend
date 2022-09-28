@@ -8,14 +8,14 @@ router.route('/').post(CategoryController.create);
 
 router.route('/').get(CategoryController.list);
 
-router.route('/:userId').get(CategoryController.read);
+router.route('/:categoryId').get(CategoryController.read);
 
 router
-  .route('/:userId')
+  .route('/:categoryId')
   .patch(CategoryController.read, CategoryController.patch);
 
 router
-  .route('/:userId')
+  .route('/:categoryId')
   .delete(CategoryController.read, CategoryController.delete);
 
 export default router;
