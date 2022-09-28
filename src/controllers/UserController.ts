@@ -5,53 +5,78 @@ import bcryptjs from 'bcryptjs';
 import { User, UserType, UpdateUser } from "../DTOs";
 
 class UserConroller {
-    async create(req: Request, res: Response, next: NextFunction) {
-        try {
-            const { 
-                email, 
-                name, 
-                password, 
-                income, 
-                fixedGoal, 
-                variableGoal, 
-                futureGoal,
-            } = req.body;
+  async create(req: Request, res: Response, next: NextFunction) {
+      try {
+          const { 
+              email, 
+              name, 
+              password, 
+              income, 
+              fixedGoal, 
+              variableGoal, 
+              futureGoal,
+          } = req.body;
 
-            const userRepository = getCustomRepository(UserRepository);
+          const userRepository = getCustomRepository(UserRepository);
 
-            const userdata = {
-                email, 
-                name, 
-                password, 
-                income, 
-                fixedGoal, 
-                variableGoal, 
-                futureGoal,
-            };
+          const userdata = {
+              email, 
+              name, 
+              password, 
+              income, 
+              fixedGoal, 
+              variableGoal, 
+              futureGoal,
+          };
 
-            const checkEmail = await userRepository.findByEmail(email);
+          const checkEmail = await userRepository.findByEmail(email);
 
-            if (checkEmail) {
-                next({
-                    status: 400,
-                    message: 'This email is already registered'
-                });
-            };
+          if (checkEmail) {
+              next({
+                  status: 400,
+                  message: 'This email is already registered'
+              });
+          };
 
-            const user = userRepository.create(userdata);
-            await userRepository.save(user);
+          const user = userRepository.create(userdata);
+          await userRepository.save(user);
 
-            res.locals = {
-                status: 201,
-                message: 'user created',
-                data: user,
-            };
+          res.locals = {
+              status: 201,
+              message: 'user created',
+              data: user,
+          };
 
-            return next();
-        } catch (error) {
-            return next(error);
+          return next();
+      } catch (error) {
+          return next(error);
+      };
+  };
+
+  async read(req: Request, res: Response, next: NextFunction) {
+      try {
+        const { userId } = req.params;
+        const userRepository = getCustomRepository(UserRepository);
+
+        const user = await userRepository.findById(userId);
+
+        if (!user) {
+          return next({
+            status: 404,
+            message: 'User not found',
+          });
         };
-    };
+
+        res.locals = {
+          status: 201,
+          data: user,
+        };
+
+        return next();
+      } catch (error) {
+          return next(error);
+      };
+  };
 };
 
 export default new UserConroller();

@@ -8,6 +8,10 @@ router.route('/').post(
     UserConroller.create,
 );
 
+router.route('/:userId').get(
+    UserConroller.read,
+);
+
 export default router;
 
 module.exports = router;
