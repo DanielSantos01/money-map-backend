@@ -17,6 +17,11 @@ router.route('/:userId').patch(
     UserConroller.patch,
 );
 
+router.route('/:userId').delete(
+    UserConroller.read,
+    UserConroller.delete,
+);
+
 export default router;
 
 module.exports = router;

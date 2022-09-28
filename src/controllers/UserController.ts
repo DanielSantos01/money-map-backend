@@ -106,6 +106,26 @@ class UserConroller {
       return next(error);
     };
   };
+
+  async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const {userId} = req.params;
+      const userRepository = getCustomRepository(UserRepository);
+      const user = await userRepository.findById(userId);
+
+      await userRepository.delete(userId);
+
+      res.locals = {
+        status: 201,
+        message: 'user deleted',
+        data: user,
+      };
+
+      return next();
+    } catch (error) {
+      return next(error);
+    };
+  };
 };
 
 export default new UserConroller();
