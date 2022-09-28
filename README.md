@@ -1,21 +1,41 @@
-# Money Map backend
-Money Map nasceu da necessidade de uma forma mais prática e intuitiva de organizar a vida financeira das pessoas e seu mapa de gastos. O objeitvo do Money Map é ajudar as pessoas com simplicidade em como guardar seu dinheiro  e como gastar ele com consciência sem a necessidade de entender termos técnicos e sem ter que gastar grandes períodos de tempo para realizar tais ações. A proposta do Money Map é gerar identificação através do uso do sistema, sem barreiras de entrada, usando a linguagem do usuário fazendo ele perceber que queremos entender ele e a partir disso gerar uma solução específica baseado no que ele quer
-# Autores 
--Arthur Araujo
+# Money Map
+Money Map has born from the necessity of a most practical and intuitive way to organize people’s financial health and spending mapping. It’s goal is to help people with simplicity about how to keep your money and how to spend it with conscience, without the needed to to understand technical terms or spend large time period to register them. Your proposal is to generate identification through the the system usage, without entry barriers, speaking the user language , making him realize that we want to understand him and, from this, generate specific solutions based on what he wants.
 
--Daniel Nascimento
+## About this repository
+This repository is dedicated to hold only the code related to the backend of the application, such as database and configs of the app
 
--Maria Paula Perazzo
+## Authors 
+- [Arthur Araujo](arthuroliveiragithub) - Product Owner
 
--Maurício Sightman
+- [Daniel Santos](https://github.com/DanielSantos01) - Frontend Developer
 
--Pedro Manoel
+- [Maria Paula Perazzo](PaulaPerazzo) - Fullstack Developer
 
-# Status do projeto
-Em desenvolvimento (Finalizadas telas relacionadas ao acesso do usuário ao aplicativo)
+- [Maurício Sightman](MauricioSight) - Backend Developer
 
-# Links úteis
+- [Pedro Manoel](https://github.com/PedroManoel01) - Documenter
 
-Notion:https://www.notion.so/Money-Map-674894654323432c9cd5c7b63406321c
+## App structure
+- src/
+  * database/
+    * index
+  * app
+  * server
+  
 
-Figma:https://www.figma.com/file/DdH48RdoD6bucrDNtJE9DZ/Moneymap?node-id=0%3A1
+## Project status
+- 1st parcialy developed with the following points:
+    * Repository creation
+    * Mockup creation
+    * Notion creation
+    * App creation
+    * App initial configuration
+- 2nd iteration running!
+    
+- 3rd iteration upcoming...
+
+## Useful links
+
+1. [Notion](https://www.notion.so/Money-Map-674894654323432c9cd5c7b63406321c)
+
+2. [Figma](https://www.figma.com/file/DdH48RdoD6bucrDNtJE9DZ/Moneymap?node-id=0%3A1)
