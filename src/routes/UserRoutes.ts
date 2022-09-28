@@ -1,26 +1,16 @@
-// import { UserConroller } from "../controllers";
-import UserConroller from "../controllers/UserController";
-import { Router } from "express";
+import { Router } from 'express';
+
+import { UserController } from '../controllers';
 
 const router = Router();
 
-router.route('/').post(
-    UserConroller.create,
-);
+router.route('/').post(UserController.create);
 
-router.route('/:userId').get(
-    UserConroller.read,
-);
+router.route('/:userId').get(UserController.read);
 
-router.route('/:userId').patch(
-    UserConroller.read,
-    UserConroller.patch,
-);
+router.route('/:userId').patch(UserController.read, UserController.patch);
 
-router.route('/:userId').delete(
-    UserConroller.read,
-    UserConroller.delete,
-);
+router.route('/:userId').delete(UserController.read, UserController.delete);
 
 export default router;
 
