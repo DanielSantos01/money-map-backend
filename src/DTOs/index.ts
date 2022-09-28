@@ -1,7 +1,2 @@
-import { User, UpdateUser, UserType } from "./User";
-
-export {
-    User, 
-    UpdateUser,
-    UserType,
-};
+export * from './Category';
+export * from './User';

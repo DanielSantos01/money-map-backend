@@ -1,5 +1,3 @@
-import UserConroller from "./UserController";
+import UserController from './UserController';
 
-export {
-    UserConroller,
-};
+export { UserController };

@@ -12,4 +12,4 @@ router.route('/').get((req, res) => {
 
 export default router;
 
-module.exports = router ;
+module.exports = router;
