@@ -77,6 +77,35 @@ class UserConroller {
           return next(error);
       };
   };
+
+  async patch(req: Request, res: Response, next: NextFunction) {
+    try {
+      const {userId} = req.params;
+      const userRepository = getCustomRepository(UserRepository);
+      const userData = req.body;
+      
+      const {error} = UpdateUser.validate(userData);
+
+      if (error) {
+        return next({
+          status: 400,
+          message: error.details,
+        });
+      };
+
+      const patchedUser = await userRepository.patch(userId, userData);
+
+      res.locals = {
+        status: 201,
+        message: 'user updated',
+        data: patchedUser,
+      };
+
+      return next();
+    } catch (error) {
+      return next(error);
+    };
+  };
 };
 
 export default new UserConroller();

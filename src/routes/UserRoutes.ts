@@ -12,6 +12,11 @@ router.route('/:userId').get(
     UserConroller.read,
 );
 
+router.route('/:userId').patch(
+    UserConroller.read,
+    UserConroller.patch,
+);
+
 export default router;
 
 module.exports = router;
