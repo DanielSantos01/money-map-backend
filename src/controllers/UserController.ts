@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { getCustomRepository } from 'typeorm';
-
 import { UserRepository } from '../repositories';
 import { UpdateUser } from '../DTOs';
+import bcryptjs from 'bcryptjs';
 
 class UserController {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -40,7 +40,11 @@ class UserController {
           status: 400,
           message: 'This email is already registered',
         });
-      }
+      };
+
+      if (userdata.password) {
+        userdata.password = bcryptjs.hashSync(userdata.password, bcryptjs.genSaltSync(10));
+      };
 
       const user = userRepository.create(userdata);
       await userRepository.save(user);
@@ -96,6 +100,10 @@ class UserController {
           message: error.details,
         });
       }
+
+      if (userData.password) {
+        userData.password = bcryptjs.hashSync(userData.password, bcryptjs.genSaltSync(10));
+      };
 
       const patchedUser = await userRepository.patch(userId, userData);
 
