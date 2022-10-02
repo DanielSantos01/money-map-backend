@@ -29,7 +29,7 @@ export default class User {
   @Column('numeric', { nullable: true })
     futureGoal: number | undefined;
 
-  @Column('string', {nullable : true})
+  @Column('text', {nullable : true})
     profilePic: string | undefined;
 };
 

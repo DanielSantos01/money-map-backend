@@ -1,4 +1,5 @@
 import User from './User';
-import Category from './Category';
+// import Category from './Category';
 
-export { User, Category };
+export { User };
+// export { User, Category };
