@@ -6,7 +6,7 @@ import { User } from '../../src/models';
 const dbEntities = [User];
 
 const options: ConnectionOptions = {
-  name: 'default',
+  name: 'postgres',
   type: 'postgres',
   host: process.env.DATABASE_TEST_HOST,
   port: Number(process.env.DATABASE_TEST_PORT),

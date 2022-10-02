@@ -1,10 +1,9 @@
 import 'dotenv/config';
-import { Connection, ConnectionOptions, createConnection } from 'typeorm';
-import getConnection from '@jest/globals';
+import { Connection, ConnectionOptions, createConnection, getConnection } from 'typeorm';
 
 
 class DatabaseConnection {
-  private connection: Connection | null = null;
+  private connection: Connection;
   private options: ConnectionOptions;
 
   constructor(options: ConnectionOptions) {
