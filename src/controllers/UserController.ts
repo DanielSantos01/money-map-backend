@@ -9,24 +9,28 @@ class UserController {
     try {
       const {
         email,
-        name,
+        firstName,
+        lastName,
         password,
         income,
         fixedGoal,
         variableGoal,
         futureGoal,
+        profilePic,
       } = req.body;
 
       const userRepository = getCustomRepository(UserRepository);
 
       const userdata = {
         email,
-        name,
+        firstName,
+        lastName,
         password,
         income,
         fixedGoal,
         variableGoal,
         futureGoal,
+        profilePic,
       };
 
       const checkEmail = await userRepository.findByEmail(email);
