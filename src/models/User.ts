@@ -28,5 +28,5 @@ export default class User {
     futureGoal: number | undefined;
 
   @OneToMany(type => Costs, user => User)
-  costs!: Costs[];
+  costs: Costs[] | undefined;
 };

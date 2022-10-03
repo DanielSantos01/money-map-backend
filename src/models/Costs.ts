@@ -4,26 +4,26 @@ import User from "./User";
 @Entity()
 export default class Costs {
     @PrimaryGeneratedColumn('uuid')
-    id!: string;
+    id: string | undefined ;
 
     @Column('uuid')
-    userId!: string;
+    userId: string | undefined ;
 
     @Column('text')
-    name!: string;
+    name: string | undefined ;
 
     @Column('text')
-    description!: string;
+    description: string | undefined ;
 
-    @Column('date')
-    date!: Date;
+    @Column('text')
+    date: Date | undefined ;
 
-    @Column('number')
-    value!: number;
+    @Column('int')
+    value: number | undefined ;
 
     @Column('uuid')
-    subCategoryId!: string;
+    subCategoryId: string | undefined ;
 
     @ManyToOne(type => User, costs => Costs, { eager: true })
-    user!: User;
+    user: User | undefined;
 };
