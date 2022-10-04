@@ -1,21 +1,23 @@
 import Joi from 'joi';
-import { SubcategoryType } from './Subcategory';
+import { CategoryType } from './Category';
 
-export const Category = Joi.object({
+export const Subcategory = Joi.object({
   name: Joi.string().required(),
   icon: Joi.string().required(),
   description: Joi.string().required(),
+  categoryId: Joi.string().required(),
 });
 
-export const UpdateCategory = Joi.object({
+export const UpdateSubcategory = Joi.object({
   name: Joi.string(),
   icon: Joi.string(),
   description: Joi.string(),
+  categoryId: Joi.string(),
 });
 
-export type CategoryType = {
+export type SubcategoryType = {
   name: string;
   icon: string;
   description: string;
-  subcategories: SubcategoryType[];
+  category: CategoryType;
 };
