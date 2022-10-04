@@ -1,10 +1,10 @@
 import {
-  Entity, PrimaryGeneratedColumn, Column, OneToMany,
+  Entity, PrimaryGeneratedColumn, Column, ManyToOne,
 } from 'typeorm';
-import Subcategory from './Subcategory';
+import Category from './Category';
 
 @Entity()
-export default class Category {
+export default class Subcategory {
   @PrimaryGeneratedColumn('uuid')
     id: string | undefined;
 
@@ -17,6 +17,6 @@ export default class Category {
   @Column('text')
     description: string | undefined;
 
-  @OneToMany(() => Subcategory, (subcategory) => subcategory.category)
-    subcategories?: Subcategory[] | undefined;
+  @ManyToOne(() => Category, (category) => category.subcategories)
+    category: Category | undefined;
 }
