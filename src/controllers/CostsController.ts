@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { getCustomRepository } from "typeorm";
 import { CostsRepository } from '../repositories';
-import { UpdateCosts } from "../DTOs";
+import { CostsType, UpdateCosts } from "../DTOs";
 
 class CostsController {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -37,7 +37,7 @@ class CostsController {
 
         return next();
       } catch (error) {
-          return next(error.details);
+          return next(error);
       };
   };
 
@@ -69,7 +69,74 @@ class CostsController {
 
       return next();
     } catch (error) {
-      return next(error.details);
+      return next(error);
+    };
+  };
+
+  async readAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      const costsRepository = getCustomRepository(CostsRepository);
+      
+      const costs = await costsRepository.findAll();
+
+      res.locals = {
+        status: 201,
+        data: costs,
+      };
+
+      return next();
+    } catch (error) {
+      return next(error);
+    };
+  };
+
+  async patch(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { costsId } = req.params;
+      const costsData: CostsType = req.body;
+      const costsRepository = getCustomRepository(CostsRepository);
+
+      const { error } = UpdateCosts.validate(costsData);
+
+      if (error) {
+        return next({
+          status: 400,
+          message: error.details
+        });
+      };
+
+      const updatedCost = await costsRepository.patch(costsId, costsData);
+
+      console.log(updatedCost);
+
+      res.locals = {
+        status: 201,
+        message: 'Cost patched!',
+        data: updatedCost,
+      };
+
+      return next();
+    } catch (error) {
+      return next(error);
+    };
+  };
+
+  async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { costsId } = req.params;
+      const costsRepository = getCustomRepository(CostsRepository);
+
+      const deletedCosts = await costsRepository.delete(costsId);
+
+      res.locals = {
+        status: 201,
+        message: 'Cost deleted',
+        deletedCosts,
+      };
+
+      return next();
+    } catch (error) {
+      return next({error});
     };
   };
 };

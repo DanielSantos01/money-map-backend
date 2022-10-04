@@ -22,7 +22,7 @@ export default class CostsRepository extends Repository<Costs> {
       };
   };
 
-  public async patch(id: string, costsData: CostsType): Promise<Costs | string | undefined | unknown> {
+  public async patch(id: string, costsData: CostsType): Promise<Costs | string | undefined | false | unknown> {
     try { 
       await this.update(id, costsData);
       const UpdatedCost = await this.findOne(id);
@@ -42,6 +42,20 @@ export default class CostsRepository extends Repository<Costs> {
       };
 
       return costName;
+    } catch (error) {
+      return error;
+    };
+  };
+
+  public async findAll(): Promise<Costs | string | false | undefined | unknown> {
+    try {
+      const costs = await this.find();
+
+      if (!costs) {
+        return false;
+      };
+      
+      return costs;
     } catch (error) {
       return error;
     };

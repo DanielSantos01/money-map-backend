@@ -5,7 +5,12 @@ const router = Router();
 
 router.route('/').post(CostsController.create);
 
-router.route('/:costsId').get(CostsController.read);
+router.route('/:costsId?').get(CostsController.read);
+router.route('/').get(CostsController.readAll);
+
+router.route('/:costsId').patch(CostsController.read, CostsController.patch);
+
+router.route('/:costsId').delete(CostsController.read, CostsController.delete);
 
 export default router;
 
