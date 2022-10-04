@@ -40,6 +40,38 @@ class CostsController {
           return next(error.details);
       };
   };
+
+  async read(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { costsId } = req.params;
+      const costsRepository = getCustomRepository(CostsRepository);
+
+      const cost = await costsRepository.findById(costsId);
+
+      if (!cost) {
+        return next({
+          status: 404,
+          message: 'Cost not found',
+        });
+      };
+
+      if (cost === 'ERROR') {
+        return next({
+          status: 400,
+          message: 'Incorrect params',
+        });
+      };
+
+      res.locals = {
+        status: 201,
+        data: cost,
+      };
+
+      return next();
+    } catch (error) {
+      return next(error.details);
+    };
+  };
 };
 
 export default new CostsController();

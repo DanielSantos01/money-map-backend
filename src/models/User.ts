@@ -10,7 +10,10 @@ export default class User {
     email: string | undefined;
 
   @Column('text')
-    name: string | undefined;
+    firstName: string | undefined;
+
+  @Column('text')
+    lastName: string | undefined;
 
   @Column('text')
     password: string | undefined;
@@ -26,7 +29,11 @@ export default class User {
 
   @Column('numeric', { nullable: true })
     futureGoal: number | undefined;
+    
+  @Column('text', {nullable : true})
+  profilePic: string | undefined;
 
   @OneToMany(type => Costs, user => User)
   costs: Costs[] | undefined;
+    
 };

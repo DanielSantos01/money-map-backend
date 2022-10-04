@@ -5,6 +5,8 @@ const router = Router();
 
 router.route('/').post(CostsController.create);
 
+router.route('/:costsId').get(CostsController.read);
+
 export default router;
 
 module.exports = router;
