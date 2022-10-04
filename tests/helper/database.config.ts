@@ -1,9 +1,9 @@
 import { ConnectionOptions } from 'typeorm';
 import { DatabaseConnection } from './DatabaseConnection';
 import 'dotenv/config';
-import { User, Category } from '../../src/models';
+import { User, Category, Subcategory } from '../../src/models';
 
-const dbEntities = [User, Category];
+const dbEntities = [User, Category, Subcategory];
 
 const options: ConnectionOptions = {
   name: 'default',

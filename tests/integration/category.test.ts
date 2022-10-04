@@ -8,6 +8,12 @@ import { connection } from '../helper/database.config';
 
 jest.setTimeout(10000);
 
+export const defaultCategoryTest = {
+  name: 'future',
+  icon: 'icon_future',
+  description: 'save money for the future',
+};
+
 describe('category CRUD', () => {
   beforeAll(async () => connection.create());
 
@@ -88,7 +94,9 @@ describe('category CRUD', () => {
       .post('/category')
       .send(categoryTestGetById);
 
-    const response = await request(app).delete(`/category/${body.data.id}`).send();
+    const response = await request(app)
+      .delete(`/category/${body.data.id}`)
+      .send();
 
     expect(response.status).toBe(201);
   });
