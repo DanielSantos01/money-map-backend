@@ -32,4 +32,18 @@ export default class CostsRepository extends Repository<Costs> {
       return error;
     };
   };
+
+  public async findByname(name: string): Promise<Costs | string | undefined | unknown | false> {
+    try {
+      const costName = await this.findOne({ where: {name} });
+
+      if (!costName) {
+        return false;
+      };
+
+      return costName;
+    } catch (error) {
+      return error;
+    };
+  };
 };
