@@ -39,7 +39,7 @@ class CategoryController {
     try {
       const categoryRepository = getCustomRepository(CategoryRepository);
 
-      const category = await categoryRepository.find();
+      const category = await categoryRepository.find({ relations: ['subcategories'] });
 
       res.locals = {
         status: 201,
