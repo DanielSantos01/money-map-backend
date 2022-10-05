@@ -162,7 +162,6 @@ class CostsController {
       const newValue = {'value' : newMoney};
 
       const updatedUser = await userRepository.patch(userId, newValue);
-      console.log(updatedUser);
 
       if (!updatedUser) {
         return next({
@@ -174,6 +173,61 @@ class CostsController {
       res.locals = {
         status: 201,
         message: 'value added',
+        data: updatedUser,
+      };
+
+      return next();
+    } catch(error) {
+      return next(error);
+    };
+  };
+
+  async removeMoney(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { costId } = req.params;
+      
+      const { value } = req.body;
+      const moneyData = { value };
+      const moneyToRemove = Number(moneyData.value);
+      
+      const costsRepository = getCustomRepository(CostsRepository);
+      const userRepository = getCustomRepository(UserRepository);
+
+      const cost: Costs = await costsRepository.findById(costId);
+      const userId = cost.userId;
+
+      const user: User = await userRepository.findById(userId);
+      const userMoney = Number(user.value);
+      const newMoney = (userMoney - moneyToRemove);
+
+      if (newMoney < 0) {
+        return next({
+          status: 400,
+          message: 'this value can not be removed because it will be less than zero'
+        });
+      };
+
+      if (newMoney === 0) {
+        res.locals = {
+          status: 201,
+          message: 'valeu removed, your current cash is zero'
+        };
+      };
+
+      const newValue = {'value' : newMoney};
+
+      const updatedUser = await userRepository.patch(userId, newValue);
+
+      if (!updatedUser) {
+        return next({
+          status: 400,
+          message: Error,
+        });
+      };
+
+      res.locals = {
+        status: 201,
+        message: 'value removed',
         data: updatedUser,
       };
 
