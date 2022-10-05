@@ -12,6 +12,8 @@ router.route('/:costsId').patch(CostsController.read, CostsController.patch);
 
 router.route('/:costsId').delete(CostsController.read, CostsController.delete);
 
+router.route('/add-money/:costsId').get(CostsController.read, CostsController.addMoney);
+
 export default router;
 
 module.exports = router;

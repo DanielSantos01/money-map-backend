@@ -3,7 +3,6 @@ import { getCustomRepository } from 'typeorm';
 import { UserRepository } from '../repositories';
 import { UpdateUser } from '../DTOs';
 import bcryptjs from 'bcryptjs';
-
 class UserController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
@@ -17,6 +16,7 @@ class UserController {
         variableGoal,
         futureGoal,
         profilePic,
+        value,
       } = req.body;
 
       const userRepository = getCustomRepository(UserRepository);
@@ -31,6 +31,7 @@ class UserController {
         variableGoal,
         futureGoal,
         profilePic,
+        value,
       };
 
       const checkEmail = await userRepository.findByEmail(email);

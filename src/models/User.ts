@@ -35,5 +35,7 @@ export default class User {
 
   @OneToMany(type => Costs, user => User)
   costs: Costs[] | undefined;
-    
+
+  @Column('numeric', { nullable: true, default: 0 })
+    value: number | undefined;
 };

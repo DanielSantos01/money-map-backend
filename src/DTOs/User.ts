@@ -10,6 +10,7 @@ export const User = Joi.object({
   variableGoal: Joi.number().required(),
   futureGoal: Joi.number().required(),
   profilePic: Joi.string().required(),
+  value: Joi.number().required(),
 });
 
 export const UpdateUser = Joi.object({
@@ -22,6 +23,7 @@ export const UpdateUser = Joi.object({
   variableGoal: Joi.number(),
   futureGoal: Joi.number(),
   profilePic: Joi.string(),
+  value: Joi.number(),
 });
 
 export type UserType = {
@@ -34,4 +36,5 @@ export type UserType = {
   variableGoal?: number;
   futureGoal?: number;
   profilePic?: string;
+  value?: number;
 };

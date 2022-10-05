@@ -1,7 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import { getCustomRepository } from "typeorm";
-import { CostsRepository } from '../repositories';
+import { CostsRepository, UserRepository } from '../repositories';
 import { CostsType, UpdateCosts } from "../DTOs";
+import Costs from "@models/Costs";
+import User from "@models/User";
 
 class CostsController {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -137,6 +139,47 @@ class CostsController {
       return next();
     } catch (error) {
       return next({error});
+    };
+  };
+
+  async addMoney(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { costId } = req.params;
+      
+      const { value } = req.body;
+      const moneyData = { value };
+      const moneyToAdd = Number(moneyData.value);
+      
+      const costsRepository = getCustomRepository(CostsRepository);
+      const userRepository = getCustomRepository(UserRepository);
+
+      const cost: Costs = await costsRepository.findById(costId);
+      const userId = cost.userId;
+
+      const user: User = await userRepository.findById(userId);
+      const userMoney = Number(user.value);
+      const newMoney = (userMoney + moneyToAdd);
+      const newValue = {'value' : newMoney};
+
+      const updatedUser = await userRepository.patch(userId, newValue);
+      console.log(updatedUser);
+
+      if (!updatedUser) {
+        return next({
+          status: 400,
+          message: Error,
+        });
+      };
+
+      res.locals = {
+        status: 201,
+        message: 'value added',
+        data: updatedUser,
+      };
+
+      return next();
+    } catch(error) {
+      return next(error);
     };
   };
 };
