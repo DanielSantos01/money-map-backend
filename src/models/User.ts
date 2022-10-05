@@ -31,5 +31,7 @@ export default class User {
 
   @Column('text', {nullable : true})
     profilePic: string | undefined;
-};
 
+  @Column('numeric', { nullable: true })
+    money: number | undefined;
+};
