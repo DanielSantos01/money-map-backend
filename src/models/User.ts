@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import Costs from './Costs';
 
 @Entity()
 export default class User {
@@ -28,10 +29,13 @@ export default class User {
 
   @Column('numeric', { nullable: true })
     futureGoal: number | undefined;
-
+    
   @Column('text', {nullable : true})
-    profilePic: string | undefined;
+  profilePic: string | undefined;
 
-  @Column('numeric', { nullable: true })
-    money: number | undefined;
+  @OneToMany(type => Costs, user => User)
+  costs: Costs[] | undefined;
+
+  @Column('numeric', { nullable: true, default: 0 })
+    value: number | undefined;
 };

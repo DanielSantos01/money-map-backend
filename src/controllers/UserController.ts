@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { UserRepository } from '../repositories';
-import { UpdateUser } from '../DTOs';
+import { UpdateUser, User } from '../DTOs';
 import bcryptjs from 'bcryptjs';
+import { nextTick } from 'process';
 class UserController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
@@ -16,7 +17,7 @@ class UserController {
         variableGoal,
         futureGoal,
         profilePic,
-        money,
+        value,
       } = req.body;
 
       const userRepository = getCustomRepository(UserRepository);
@@ -31,7 +32,7 @@ class UserController {
         variableGoal,
         futureGoal,
         profilePic,
-        money,
+        value,
       };
 
       const checkEmail = await userRepository.findByEmail(email);
@@ -137,8 +138,57 @@ class UserController {
       return next();
     } catch (error) {
       return next(error);
-    }
-  }
-}
+    };
+  };
+
+  async login(req: Request, res: Response, next: NextFunction) {
+    try {
+      const {
+        email,
+        password
+      } = req.body;
+      const userData = {email, password};
+      
+      const userRepository = getCustomRepository(UserRepository);
+
+      const validate = User.validate(userData);
+
+      if (!validate) {
+        return next({
+          status: 400,
+          message: 'something went wrong',
+        });
+      };
+
+      const user = await userRepository.findByEmail(email);
+
+      if (!user) {
+        return next({
+          status: 404,
+          message: 'user not found',
+        });
+      };
+
+      const hashPassword = bcryptjs.compareSync(password, user.password);
+
+      if (!hashPassword) {
+        return next({
+          status: 400,
+          message: 'wrong password',
+        });
+      };
+
+      res.locals = {
+        status: 201,
+        message: 'user: ',
+        data: user,
+      };
+
+      return next();
+    } catch (error) {
+      return next(error);
+    };
+  };
+};
 
 export default new UserController();

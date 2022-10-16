@@ -1,10 +1,12 @@
 import { Router } from 'express';
 
 import UserRouter from './UserRoutes';
+import CostsRouter from './CostsRoutes';
 
 const router = Router();
 
 router.use('/user', UserRouter);
+router.use('/costs', CostsRouter);
 
 router.route('/').get((req, res) => {
   res.send('Made with 💚 and &lt; &#x0002F; &gt; by MoneyMap');
