@@ -6,6 +6,8 @@ const router = Router();
 
 router.route('/').post(UserController.create);
 
+router.route('/login').post(UserController.login);
+
 router.route('/:userId').get(UserController.read);
 
 router.route('/:userId').patch(UserController.read, UserController.patch);
