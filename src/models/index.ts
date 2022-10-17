@@ -1,5 +1,6 @@
 import User from './User';
-// import Category from './Category';
+import Category from './Category';
+import Subcategory from './Subcategory';
 import Costs from './Costs';
 
-export { User, Costs };
+export { User, Category, Subcategory, Costs };
