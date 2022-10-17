@@ -22,6 +22,4 @@ ENV NODE_PATH=./build
 
 RUN yarn build
 
-RUN docker ps
-
 CMD ["yarn", "dev"]
