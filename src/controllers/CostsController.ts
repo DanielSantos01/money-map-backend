@@ -236,6 +236,34 @@ class CostsController {
       return next(error);
     };
   };
+
+  async listUserCost(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { userId } = req.params;
+      const costsRepository = getCustomRepository(CostsRepository);
+
+      const list = await costsRepository.findOne({where: {userId}});
+
+      console.log(list);
+
+      if (!list) {
+        return next({
+          status: 404,
+          message: 'user does not exists',
+        });
+      };
+
+      res.locals = {
+        status: 201,
+        message: 'olhai',
+        data: list,
+      };
+
+      return next();
+    } catch (error) {
+      return next(error);
+    };
+  };
 };
 
 export default new CostsController();

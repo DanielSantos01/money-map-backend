@@ -7,6 +7,7 @@ router.route('/').post(CostsController.create);
 
 router.route('/:costsId?').get(CostsController.read);
 router.route('/').get(CostsController.readAll);
+router.route('/findUser/:userId').get(CostsController.listUserCost);
 
 router.route('/:costsId').patch(CostsController.read, CostsController.patch);
 
