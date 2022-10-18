@@ -189,6 +189,41 @@ class UserController {
       return next(error);
     };
   };
+
+  async forgotPassword(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { email } = req.body;
+      const userData = { email };
+      
+      const validate = User.validate(userData);
+      
+      if (!validate) {
+        return next({
+          status: 400,
+          message: 'something went wrong',
+        });
+      };
+
+      const userRepository = getCustomRepository(UserRepository);
+      const checkEmail = await userRepository.findByEmail(email);
+
+      if (!checkEmail) {
+        return next({
+          status: 404,
+          message: 'email not found',
+        });
+      };
+
+      res.locals = {
+        status: 201,
+        data: checkEmail,
+      };
+      
+      return next();
+    } catch (error) {
+      return next(error);
+    };
+  };
 };
 
 export default new UserController();
