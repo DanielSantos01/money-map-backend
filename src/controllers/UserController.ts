@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { getCustomRepository } from 'typeorm';
-import { UserRepository } from '../repositories';
-import { UpdateUser, User } from '../DTOs';
 import bcryptjs from 'bcryptjs';
-import { nextTick } from 'process';
+import { UserRepository } from '../repositories';
+import { UpdateUser, User, UserType } from '../DTOs';
+
 class UserController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
@@ -42,11 +42,14 @@ class UserController {
           status: 400,
           message: 'This email is already registered',
         });
-      };
+      }
 
       if (userdata.password) {
-        userdata.password = bcryptjs.hashSync(userdata.password, bcryptjs.genSaltSync(10));
-      };
+        userdata.password = bcryptjs.hashSync(
+          userdata.password,
+          bcryptjs.genSaltSync(10),
+        );
+      }
 
       const user = userRepository.create(userdata);
       await userRepository.save(user);
@@ -104,8 +107,11 @@ class UserController {
       }
 
       if (userData.password) {
-        userData.password = bcryptjs.hashSync(userData.password, bcryptjs.genSaltSync(10));
-      };
+        userData.password = bcryptjs.hashSync(
+          userData.password,
+          bcryptjs.genSaltSync(10),
+        );
+      }
 
       const patchedUser = await userRepository.patch(userId, userData);
 
@@ -138,17 +144,14 @@ class UserController {
       return next();
     } catch (error) {
       return next(error);
-    };
-  };
+    }
+  }
 
   async login(req: Request, res: Response, next: NextFunction) {
     try {
-      const {
-        email,
-        password
-      } = req.body;
-      const userData = {email, password};
-      
+      const { email, password } = req.body;
+      const userData = { email, password };
+
       const userRepository = getCustomRepository(UserRepository);
 
       const validate = User.validate(userData);
@@ -158,51 +161,51 @@ class UserController {
           status: 400,
           message: 'something went wrong',
         });
-      };
+      }
 
-      const user = await userRepository.findByEmail(email);
+      const user = (await userRepository.findByEmail(email)) as UserType;
 
       if (!user) {
         return next({
           status: 404,
           message: 'user not found',
         });
-      };
+      }
 
-      const hashPassword = bcryptjs.compareSync(password, user.password);
+      const hashPassword = bcryptjs.compareSync(password, user.password!);
 
       if (!hashPassword) {
         return next({
           status: 400,
           message: 'wrong password',
         });
-      };
+      }
 
       res.locals = {
         status: 201,
         message: 'user: ',
-        data: user,
+        data: { ...user, password: undefined },
       };
 
       return next();
     } catch (error) {
       return next(error);
-    };
-  };
+    }
+  }
 
   async forgotPassword(req: Request, res: Response, next: NextFunction) {
     try {
       const { email } = req.body;
       const userData = { email };
-      
+
       const validate = User.validate(userData);
-      
+
       if (!validate) {
         return next({
           status: 400,
           message: 'something went wrong',
         });
-      };
+      }
 
       const userRepository = getCustomRepository(UserRepository);
       const checkEmail = await userRepository.findByEmail(email);
@@ -212,47 +215,11 @@ class UserController {
           status: 404,
           message: 'email not found',
         });
-      };
+      }
 
       res.locals = {
         status: 201,
         data: checkEmail,
-      };
-      
-      return next();
-    } catch (error) {
-      return next(error);
-    };
-  };
-
-  async patchPassword(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { email, password } = req.body;
-      const userRepository = getCustomRepository(UserRepository);
-      const userData = req.body;
-
-      const { error } = UpdateUser.validate(userData);
-
-      const findUser = await userRepository.findByEmail(email);
-      const userId = findUser.id
-
-      if (error) {
-        return next({
-          status: 400,
-          message: error.details,
-        });
-      }
-
-      if (userData.password) {
-        userData.password = bcryptjs.hashSync(userData.password, bcryptjs.genSaltSync(10));
-      };
-
-      const patchedUser = await userRepository.patch(userId, userData);
-
-      res.locals = {
-        status: 201,
-        message: 'user updated',
-        data: patchedUser,
       };
 
       return next();
@@ -260,6 +227,6 @@ class UserController {
       return next(error);
     }
   }
-};
+}
 
 export default new UserController();

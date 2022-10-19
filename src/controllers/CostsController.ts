@@ -257,9 +257,7 @@ class CostsController {
       const { userId } = req.params;
       const costsRepository = getCustomRepository(CostsRepository);
 
-      const list = await costsRepository.findOne({ where: { userId } });
-
-      console.log(list);
+      const list = await costsRepository.find({ where: { userId } });
 
       if (!list) {
         return next({

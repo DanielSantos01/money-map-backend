@@ -41,13 +41,20 @@ export default class UserRepository extends Repository<User> {
     email: string,
   ): Promise<User | false | string | unknown> {
     try {
-      const user = await this.findOne({ where: { email } });
+      const userFull = await this.findOne({
+        where: { email },
+        select: ['password'],
+      });
+
+      const user = await this.findOne({
+        where: { email },
+      });
 
       if (!user) {
         return false;
       }
 
-      return user;
+      return { ...user, ...userFull };
     } catch (error) {
       return (error as ErrorType).severity || error;
     }
