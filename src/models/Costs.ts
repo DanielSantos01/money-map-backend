@@ -1,29 +1,38 @@
-import { PrimaryGeneratedColumn, Column, Entity, ManyToOne } from "typeorm";
-import User from "./User";
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
+import User from './User';
+import Subcategory from './Subcategory';
 
 @Entity()
 export default class Costs {
-    @PrimaryGeneratedColumn('uuid')
-    id: string | undefined ;
+  @PrimaryGeneratedColumn('uuid')
+    id: string | undefined;
 
-    @Column('uuid')
-    userId: string | undefined ;
+  @Column('uuid')
+    userId: string | undefined;
 
-    @Column('text')
-    name: string | undefined ;
+  @Column('text')
+    name: string | undefined;
 
-    @Column('text')
-    description: string | undefined ;
+  @Column('text')
+    description: string | undefined;
 
-    @Column('text')
-    date: Date | undefined ;
+  @Column('text')
+    date: Date | undefined;
 
-    @Column('int')
-    value: number | undefined ;
+  @Column('int')
+    value: number | undefined;
 
-    @Column('uuid')
-    subCategoryId: string | undefined ;
+  @OneToOne(() => Subcategory, (subcategory) => subcategory.cost)
+  @JoinColumn()
+    subcategory: Subcategory | undefined;
 
-    @ManyToOne(type => User, costs => Costs, { eager: true })
+  @ManyToOne(() => User, (user) => user.costs)
     user: User | undefined;
-};
+}

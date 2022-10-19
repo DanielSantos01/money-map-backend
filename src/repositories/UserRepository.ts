@@ -25,7 +25,7 @@ export default class UserRepository extends Repository<User> {
 
   public async patch(
     id: string,
-    userData: UserType,
+    userData: Partial<UserType>,
   ): Promise<User | string | undefined | unknown> {
     try {
       await this.update(id, userData);

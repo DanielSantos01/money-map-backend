@@ -8,7 +8,7 @@ export default class CategoryRepository extends Repository<Category> {
     id: string,
   ): Promise<Category | false | string | unknown> {
     try {
-      const category = await this.findOne(id);
+      const category = await this.findOne(id, { relations: ['subcategory'] });
 
       if (!category) {
         return false;
@@ -26,7 +26,7 @@ export default class CategoryRepository extends Repository<Category> {
   ): Promise<Category | string | undefined | unknown> {
     try {
       await this.update(id, CategoryData);
-      const UpdatedCategory = await this.findOne(id);
+      const UpdatedCategory = await this.findOne(id, { relations: ['subcategory'] });
 
       return UpdatedCategory;
     } catch (error) {
