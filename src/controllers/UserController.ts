@@ -227,6 +227,45 @@ class UserController {
       return next(error);
     }
   }
+
+  async patchPassword(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { email, password } = req.body;
+      const userRepository = getCustomRepository(UserRepository);
+      const userData = req.body;
+
+      const { error } = UpdateUser.validate(userData);
+
+      const findUser = await userRepository.findByEmail(email) as UserType;
+      const userId = findUser.id;
+
+      if (error) {
+        return next({
+          status: 400,
+          message: error.details,
+        });
+      }
+
+      if (userData.password) {
+        userData.password = bcryptjs.hashSync(
+          password,
+          bcryptjs.genSaltSync(10),
+        );
+      }
+
+      const patchedUser = await userRepository.patch(userId, userData);
+
+      res.locals = {
+        status: 201,
+        message: 'user updated',
+        data: patchedUser,
+      };
+
+      return next();
+    } catch (error) {
+      return next(error);
+    }
+  }
 }
 
 export default new UserController();
