@@ -3,8 +3,6 @@ import {
   Column,
   Entity,
   ManyToOne,
-  OneToOne,
-  JoinColumn,
 } from 'typeorm';
 import User from './User';
 import Subcategory from './Subcategory';
@@ -29,8 +27,7 @@ export default class Costs {
   @Column('int')
     value: number | undefined;
 
-  @OneToOne(() => Subcategory, (subcategory) => subcategory.cost)
-  @JoinColumn()
+  @ManyToOne(() => Subcategory, (subcategory) => subcategory.costs)
     subcategory: Subcategory | undefined;
 
   @ManyToOne(() => User, (user) => user.costs)

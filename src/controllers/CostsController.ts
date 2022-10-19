@@ -3,27 +3,33 @@ import { getCustomRepository } from 'typeorm';
 import Costs from '@models/Costs';
 import User from '@models/User';
 import { CostsRepository, UserRepository } from '../repositories';
-import { CostsType, UpdateCosts } from '../DTOs';
+import {
+  CostsType,
+  UpdateCosts,
+  Costs as CreateCosts,
+  CostsProps,
+} from '../DTOs';
 
 class CostsController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const {
-        userId, name, description, date, value, subCategoryId,
-      } = req.body;
+      const costsData = req.body as CostsProps;
 
-      const costsData = {
-        userId,
-        name,
-        description,
-        date,
-        value,
-        subCategoryId,
-      };
+      const { error } = CreateCosts.validate(costsData);
+
+      if (error) {
+        return next({
+          status: 400,
+          message: error.details,
+        });
+      }
 
       const costsRepository = getCustomRepository(CostsRepository);
 
-      const costs = costsRepository.create(costsData);
+      const costs = costsRepository.create({
+        ...costsData,
+        subcategory: { id: costsData.subCategoryId },
+      });
       await costsRepository.save(costs);
 
       res.locals = {
@@ -70,15 +76,18 @@ class CostsController {
     }
   }
 
-  async readAll(req: Request, res: Response, next: NextFunction) {
+  async list(req: Request, res: Response, next: NextFunction) {
     try {
       const costsRepository = getCustomRepository(CostsRepository);
 
-      const costs = await costsRepository.findAll();
+      const result = await costsRepository.find({
+        relations: ['subcategory'],
+        order: { date: 'DESC' },
+      });
 
       res.locals = {
         status: 201,
-        data: costs,
+        data: result,
       };
 
       return next();
