@@ -13,8 +13,8 @@ router.route('/:costsId').patch(CostsController.read, CostsController.patch);
 
 router.route('/:costsId').delete(CostsController.read, CostsController.delete);
 
-router.route('/add-money/:costsId').get(CostsController.read, CostsController.addMoney);
-router.route('/remove-money/:costsId').get(CostsController.read, CostsController.removeMoney);
+router.route('/add-money/:costsId').post(CostsController.read, CostsController.addMoney);
+router.route('/remove-money/:costsId').post(CostsController.read, CostsController.removeMoney);
 
 export default router;
 
