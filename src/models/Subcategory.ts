@@ -1,5 +1,9 @@
 import {
-  Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import Category from './Category';
 import Costs from './Costs';
@@ -21,6 +25,6 @@ export default class Subcategory {
   @ManyToOne(() => Category, (category) => category.subcategories)
     category: Category | undefined;
 
-  @OneToOne(() => Costs, (cost) => cost.subcategory)
-    cost: Costs | undefined;
+  @OneToMany(() => Costs, (cost) => cost.subcategory)
+    costs: Costs | undefined;
 }

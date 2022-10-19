@@ -21,10 +21,19 @@ export const UpdateCosts = Joi.object({
 });
 
 export type CostsType = {
-    user: User;
-    subcategory: SubcategoryType;
-    description: string;
-    name: string;
-    date: Date;
-    value: number;
+  user: User;
+  subcategory: SubcategoryType;
+  description: string;
+  name: string;
+  date: Date;
+  value: number;
+};
+
+export type CostsProps = {
+  userId: string;
+  name: string;
+  description: string;
+  date: Date;
+  value: number;
+  subCategoryId: string;
 };

@@ -58,20 +58,4 @@ export default class CostsRepository extends Repository<Costs> {
       return error;
     }
   }
-
-  public async findAll(): Promise<
-    Costs | string | false | undefined | unknown
-    > {
-    try {
-      const costs = await this.find();
-
-      if (!costs) {
-        return false;
-      }
-
-      return costs;
-    } catch (error) {
-      return error;
-    }
-  }
 }
